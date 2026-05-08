@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jenet Jang — E-Learning Developer & Content Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0c;
+  --bg2: #141414;
+  --bg3: #1c1c1c;
+  --white: #f0ede6;
+  --gray: #6b6b6b;
+  --gray2: #3a3a3a;
+  --accent: #d4f060;
+  --accent2: #a8c43a;
+  --red: #e84040;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* 커스텀 커서 */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(212,240,96,0.5);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.1s ease;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 3rem;
+  mix-blend-mode: normal;
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex; gap: 2rem; list-style: none;
+}
+.nav-links a {
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 3rem;
+  padding-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(8rem, 18vw, 22rem);
+  color: rgba(255,255,255,0.025);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: -0.04em;
+  user-select: none;
+}
+.hero-tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  display: flex; align-items: center; gap: 1rem;
+}
+.hero-tag::before {
+  content: '';
+  display: inline-block;
+  width: 2rem; height: 1px;
+  background: var(--accent);
+}
+.hero-headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.5rem, 9vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  margin-bottom: 3rem;
+}
+.hero-headline em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid var(--gray2);
+  padding-top: 1.5rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.hero-desc {
+  font-size: 1rem;
+  color: var(--gray);
+  line-height: 1.65;
+  max-width: 420px;
+}
+.hero-scroll {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+  display: flex; align-items: center; gap: 0.75rem;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 3rem; height: 1px;
+  background: var(--gray);
+  position: relative; overflow: hidden;
+}
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  left: -100%; top: 0;
+  width: 100%; height: 100%;
+  background: var(--accent);
+  animation: scrollAnim 2s ease infinite;
+}
+@keyframes scrollAnim {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* ── MARQUEE ── */
+.marquee-section {
+  border-top: 1px solid var(--gray2);
+  border-bottom: 1px solid var(--gray2);
+  padding: 1.2rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 25s linear infinite;
+}
+.marquee-item {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  padding: 0 2rem;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.marquee-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── SECTION BASE ── */
+section { padding: 6rem 3rem; }
+.section-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.section-eyebrow::before {
+  content: '';
+  width: 1.5rem; height: 1px;
+  background: var(--accent);
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 3rem;
+}
+
+/* ── WORK ── */
+.work-section { background: var(--bg); }
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--gray2);
+}
+.work-card {
+  background: var(--bg);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+  transition: background 0.3s;
+  min-height: 280px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.work-card:hover { background: var(--bg2); }
+.work-card-num {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--gray);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.work-card-thumb {
+  width: 100%; height: 160px;
+  background: var(--bg3);
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  color: var(--gray);
+  letter-spacing: 0.06em;
+  border: 1px dashed var(--gray2);
+  transition: border-color 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+.work-card:hover .work-card-thumb { border-color: var(--accent); }
+.thumb-icon {
+  font-size: 2rem;
+  opacity: 0.3;
+  margin-bottom: 0.5rem;
+}
+.work-card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+.work-card-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.work-card-tags {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--gray2);
+  color: var(--gray);
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+.work-card-arrow {
+  width: 36px; height: 36px;
+  border: 1px solid var(--gray2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  color: var(--gray);
+  flex-shrink: 0;
+  transition: all 0.25s;
+}
+.work-card:hover .work-card-arrow {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(212,240,96,0.08);
+}
+.work-card-wide {
+  grid-column: span 2;
+  min-height: 200px;
+}
+
+/* ── ABOUT ── */
+.about-section { background: var(--bg2); }
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: start;
+}
+.about-left {}
+.about-copy {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: #c0bdb6;
+  margin-bottom: 2rem;
+}
+.about-copy strong { color: var(--white); font-weight: 500; }
+.stat-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--gray2);
+  margin-top: 2.5rem;
+}
+.stat-box {
+  background: var(--bg2);
+  padding: 1.5rem;
+}
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 2.8rem;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.about-right {}
+.skill-list {
+  list-style: none;
+  border-top: 1px solid var(--gray2);
+}
+.skill-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--gray2);
+  font-size: 0.9rem;
+}
+.skill-name { color: var(--white); font-weight: 400; }
+.skill-level {
+  display: flex; gap: 4px;
+}
+.skill-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gray2);
+}
+.skill-dot.on { background: var(--accent); }
+
+/* ── TOOLS ── */
+.tools-section { background: var(--bg); }
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1px;
+  background: var(--gray2);
+  margin-top: 3rem;
+}
+.tool-box {
+  background: var(--bg);
+  padding: 2rem 1.5rem;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  gap: 0.75rem;
+  transition: background 0.25s;
+}
+.tool-box:hover { background: var(--bg3); }
+.tool-icon { font-size: 1.8rem; }
+.tool-name {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* ── CONTACT ── */
+.contact-section {
+  background: var(--bg2);
+  padding: 6rem 3rem;
+  text-align: center;
+}
+.contact-big {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 8vw, 8rem);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  margin-bottom: 2.5rem;
+}
+.contact-big span { color: var(--accent); }
+.contact-email {
+  display: inline-block;
+  font-size: 1rem;
+  color: var(--gray);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gray2);
+  padding-bottom: 4px;
+  letter-spacing: 0.04em;
+  transition: color 0.2s, border-color 0.2s;
+  margin-bottom: 3rem;
+}
+.contact-email:hover { color: var(--white); border-color: var(--white); }
+.contact-links {
+  display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+}
+.contact-link {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-link:hover { color: var(--accent); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--gray2);
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+}
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--gray);
+  letter-spacing: 0.04em;
+}
+
+/* ── FADE IN ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 1.2rem 1.5rem; }
+  nav .nav-links { display: none; }
+  .hero, section { padding: 3rem 1.5rem; }
+  .hero { padding-top: 6rem; }
+  .work-grid { grid-template-columns: 1fr; }
+  .work-card-wide { grid-column: span 1; }
+  .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+  footer { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Jenet Jang</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#tools">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">JENET</div>
+  <div class="hero-tag">Seoul, Korea — E-Learning & Content</div>
+  <h1 class="hero-headline">
+    Maker of<br>
+    <em>learning</em><br>
+    experiences
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">
+      HRD 콘텐츠 기획부터 AI 기반 이러닝 개발,<br>
+      강의 교안 디자인, 웹 퍼블리싱까지.<br>
+      교육과 기술이 만나는 지점에서 일합니다.
+    </p>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>E-Learning Developer</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Instructional Designer</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Web Publisher</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Content Video Designer</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>HRD Specialist</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>AI Content Creator</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>PPT Designer</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Stock Illustrator</span>
+    <!-- 반복 (무한 루프용) -->
+    <span class="marquee-item"><span class="marquee-dot"></span>E-Learning Developer</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Instructional Designer</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Web Publisher</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Content Video Designer</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>HRD Specialist</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>AI Content Creator</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>PPT Designer</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Stock Illustrator</span>
+  </div>
+</div>
+
+<!-- WORK -->
+<section class="work-section" id="work">
+  <div class="section-eyebrow fade-in">Work</div>
+  <h2 class="section-title fade-in">Selected<br>Projects</h2>
+
+  <div class="work-grid">
+    <!-- Card 1 -->
+    <div class="work-card fade-in">
+      <div>
+        <div class="work-card-num">01 — E-Learning</div>
+        <div class="work-card-thumb">
+          <div style="text-align:center">
+            <div class="thumb-icon">📚</div>
+            <div>작업물 이미지 첨부</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-card-bottom">
+        <div>
+          <div class="work-card-title">AI 기반 이러닝<br>콘텐츠 개발</div>
+          <div class="work-card-tags">
+            <span class="tag">Instructional Design</span>
+            <span class="tag">Script</span>
+            <span class="tag">AI</span>
+          </div>
+        </div>
+        <div class="work-card-arrow">↗</div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="work-card fade-in">
+      <div>
+        <div class="work-card-num">02 — PPT Design</div>
+        <div class="work-card-thumb">
+          <div style="text-align:center">
+            <div class="thumb-icon">🎨</div>
+            <div>작업물 이미지 첨부</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-card-bottom">
+        <div>
+          <div class="work-card-title">강의 교안<br>PPT 디자인</div>
+          <div class="work-card-tags">
+            <span class="tag">PowerPoint</span>
+            <span class="tag">Layout</span>
+            <span class="tag">Print</span>
+          </div>
+        </div>
+        <div class="work-card-arrow">↗</div>
+      </div>
+    </div>
+
+    <!-- Card 3 Wide -->
+    <div class="work-card work-card-wide fade-in">
+      <div>
+        <div class="work-card-num">03 — Web Publishing</div>
+        <div class="work-card-thumb" style="height:200px">
+          <div style="text-align:center">
+            <div class="thumb-icon">🌐</div>
+            <div>작업물 이미지 첨부</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-card-bottom">
+        <div>
+          <div class="work-card-title">웹 퍼블리싱 · Leaflet 지도 · UI 설계</div>
+          <div class="work-card-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Leaflet</span>
+          </div>
+        </div>
+        <div class="work-card-arrow">↗</div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="work-card fade-in">
+      <div>
+        <div class="work-card-num">04 — Video Content</div>
+        <div class="work-card-thumb">
+          <div style="text-align:center">
+            <div class="thumb-icon">🎬</div>
+            <div>작업물 이미지 첨부</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-card-bottom">
+        <div>
+          <div class="work-card-title">조선왕조 테마<br>영상 콘텐츠</div>
+          <div class="work-card-tags">
+            <span class="tag">Storytelling</span>
+            <span class="tag">AI Image</span>
+          </div>
+        </div>
+        <div class="work-card-arrow">↗</div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="work-card fade-in">
+      <div>
+        <div class="work-card-num">05 — HRD</div>
+        <div class="work-card-thumb">
+          <div style="text-align:center">
+            <div class="thumb-icon">📋</div>
+            <div>작업물 이미지 첨부</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-card-bottom">
+        <div>
+          <div class="work-card-title">법정의무교육<br>HRD 기획</div>
+          <div class="work-card-tags">
+            <span class="tag">HRD</span>
+            <span class="tag">Planning</span>
+          </div>
+        </div>
+        <div class="work-card-arrow">↗</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-left">
+      <div class="section-eyebrow fade-in">About</div>
+      <h2 class="section-title fade-in">교육과<br>기술 사이</h2>
+      <p class="about-copy fade-in">
+        경영지원 과장이자 이러닝 콘텐츠 개발자로,
+        <strong>HRD 기획부터 AI 기반 콘텐츠 제작</strong>까지
+        전 과정을 직접 수행합니다.
+      </p>
+      <p class="about-copy fade-in">
+        교수설계(Instructional Design) 이론을 바탕으로
+        <strong>학습자 중심의 콘텐츠</strong>를 만들고,
+        Figma · Python · Google Workspace를 활용한
+        <strong>업무 자동화</strong>도 꾸준히 탐구합니다.
+      </p>
+      <div class="stat-row fade-in">
+        <div class="stat-box">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">이러닝 개발 경력</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">AI</div>
+          <div class="stat-label">기반 콘텐츠 특화</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-label">스톡 플랫폼 운영</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">2급</div>
+          <div class="stat-label">평생교육사 취득 과정</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right fade-in">
+      <ul class="skill-list">
+        <li class="skill-item">
+          <span class="skill-name">이러닝 콘텐츠 개발</span>
+          <span class="skill-level">
+            <span class="skill-dot on"></span><span class="skill-dot on"></span>
+            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot on"></span>
+          </span>
+        </li>
+        <li class="skill-item">
+          <span class="skill-name">PowerPoint / PPT 디자인</span>
+          <span class="skill-level">
+            <span class="skill-dot on"></span><span class="skill-dot on"></span>
+            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot on"></span>
+          </span>
+        </li>
+        <li class="skill-item">
+          <span class="skill-name">HTML / CSS / Web Publishing</span>
+          <span class="skill-level">
+            <span class="skill-dot on"></span><span class="skill-dot on"></span>
+            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot"></span>
+          </span>
+        </li>
+        <li class="skill-item">
+          <span class="skill-name">Figma</span>
+          <span class="skill-level">
+            <span class="skill-dot on"></span><span class="skill-dot on"></span>
+            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot"></span>
+          </span>
+        </li>
+        <li class="skill-item">
+          <span class="skill-name">Python / Google Apps Script</span>
+          <span class="skill-level">
+            <span class="skill-dot on"></span><span class="skill-dot on"></span>
+            <span class="skill-dot on"></span><span class="skill-dot"></span><span class="skill-dot"></span>
+          </span>
+        </li>
+        <li class="skill-item">
+          <span class="skill-name">AI 프롬프트 설계 · 활용</span>
+          <span class="skill-level">
+            <span class="skill-dot on"></span><span class="skill-dot on"></span>
+            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot on"></span>
+          </span>
+        </li>
+        <li class="skill-item">
+          <span class="skill-name">교수설계 (Instructional Design)</span>
+          <span class="skill-level">
+            <span class="skill-dot on"></span><span class="skill-dot on"></span>
+            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot"></span>
+          </span>
+        </li>
+        <li class="skill-item">
+          <span class="skill-name">Adobe Illustrator / Photoshop</span>
+          <span class="skill-level">
+            <span class="skill-dot on"></span><span class="skill-dot on"></span>
+            <span class="skill-dot on"></span><span class="skill-dot"></span><span class="skill-dot"></span>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section" id="tools">
+  <div class="section-eyebrow fade-in">Tools</div>
+  <h2 class="section-title fade-in">주요 툴 &<br>플랫폼</h2>
+  <div class="tools-grid fade-in">
+    <div class="tool-box"><div class="tool-icon">🤖</div><div class="tool-name">Claude AI</div></div>
+    <div class="tool-box"><div class="tool-icon">📊</div><div class="tool-name">PowerPoint</div></div>
+    <div class="tool-box"><div class="tool-icon">🎨</div><div class="tool-name">Figma</div></div>
+    <div class="tool-box"><div class="tool-icon">🖼</div><div class="tool-name">Illustrator</div></div>
+    <div class="tool-box"><div class="tool-icon">📸</div><div class="tool-name">Photoshop</div></div>
+    <div class="tool-box"><div class="tool-icon">🐍</div><div class="tool-name">Python</div></div>
+    <div class="tool-box"><div class="tool-icon">🌍</div><div class="tool-name">Leaflet</div></div>
+    <div class="tool-box"><div class="tool-icon">📁</div><div class="tool-name">Google Drive</div></div>
+    <div class="tool-box"><div class="tool-icon">⚙️</div><div class="tool-name">Apps Script</div></div>
+    <div class="tool-box"><div class="tool-icon">📡</div><div class="tool-name">FTP</div></div>
+    <div class="tool-box"><div class="tool-icon">🔁</div><div class="tool-name">n8n</div></div>
+    <div class="tool-box"><div class="tool-icon">🗒</div><div class="tool-name">Notion</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-big fade-in">
+    Let's<br><span>create</span><br>together.
+  </div>
+  <a href="mailto:hostgod20@gmail.com" class="contact-email fade-in">hostgod20@gmail.com</a>
+  <div class="contact-links fade-in">
+    <a href="#" class="contact-link">LinkedIn</a>
+    <a href="#" class="contact-link">GitHub</a>
+    <a href="#" class="contact-link">Blog</a>
+    <a href="#" class="contact-link">Adobe Stock</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Jenet Jang</div>
+  <div class="footer-copy">© 2026 Jenet Jang. All rights reserved.</div>
+  <div class="footer-copy">Seoul, Korea</div>
+</footer>
+
+<script>
+// 커서
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+});
+function animRing() {
+  rx += (mx - rx - 18) * 0.12;
+  ry += (my - ry - 18) * 0.12;
+  ring.style.transform = `translate(${rx}px, ${ry}px)`;
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// 스크롤 페이드인
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// 카드 커서 효과
+document.querySelectorAll('.work-card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    cursor.style.transform += ' scale(3)';
+    cursor.style.mixBlendMode = 'difference';
+  });
+  card.addEventListener('mouseleave', () => {
+    cursor.style.transform = cursor.style.transform.replace(' scale(3)', '');
+  });
+});
+</script>
+</body>
+</html>
