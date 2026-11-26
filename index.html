@@ -3,20 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jenet Jang — E-Learning Developer & Content Designer</title>
+<title>Jenet Jang — E-Learning Developer &amp; Content Designer</title>
+<meta name="description" content="HRD 콘텐츠 기획부터 AI 기반 이러닝 개발, 강의 교안 디자인, 웹 퍼블리싱까지. 이러닝 개발자 · 콘텐츠 디자이너 Jenet Jang의 포트폴리오.">
+<meta name="theme-color" content="#0c0c0c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jenet Jang — E-Learning Developer & Content Designer">
+<meta property="og:description" content="교육과 기술이 만나는 지점에서 일합니다.">
+<meta property="og:url" content="https://jdhai-web.github.io/">
+<script>
+  // JS 사용 가능 표시 + 저장된 테마를 화면 그리기 전에 적용 (깜빡임 방지)
+  document.documentElement.classList.add('js');
+  try {
+    var savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.setAttribute('data-theme', savedTheme);
+  } catch (e) {}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
+/* ── 한글 폰트: 사용자 PC의 맑은 고딕을 로컬로 사용 ── */
+@font-face {
+  font-family: 'LocalMalgun';
+  src: local('Malgun Gothic'), local('맑은 고딕'), local('MalgunGothic');
+  font-weight: 300 500;
+}
+@font-face {
+  font-family: 'LocalMalgun';
+  src: local('Malgun Gothic Bold'), local('MalgunGothicBold'), local('맑은 고딕 Bold');
+  font-weight: 600 800;
+}
+
+/* ── 색상 토큰: 기본 다크 테마 ── */
 :root {
   --bg: #0c0c0c;
   --bg2: #141414;
   --bg3: #1c1c1c;
   --white: #f0ede6;
-  --gray: #6b6b6b;
-  --gray2: #3a3a3a;
+  --gray: #8f8f8f;          /* 보조 텍스트 (배경 대비 4.5:1 이상으로 보정) */
+  --gray2: #3a3a3a;         /* 선·테두리 전용 */
+  --soft: #c0bdb6;          /* 본문 소개글 */
+  --ghost: rgba(255,255,255,0.025);
   --accent: #d4f060;
   --accent2: #a8c43a;
+  --accent-soft: rgba(212,240,96,0.08);
+  --accent-line: rgba(212,240,96,0.5);
+  --nav-bg: rgba(12,12,12,0.85);
+  --focus: #d4f060;
   --red: #e84040;
+  --font-body: 'DM Sans', 'LocalMalgun', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  --font-display: 'Syne', 'LocalMalgun', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  color-scheme: dark;
+}
+/* ── 라이트 테마 (상단 버튼으로 전환) ── */
+:root[data-theme="light"] {
+  --bg: #f6f4ee;
+  --bg2: #ece9e1;
+  --bg3: #e2dfd6;
+  --white: #141414;
+  --gray: #595959;
+  --gray2: #cfcbc2;
+  --soft: #3d3b37;
+  --ghost: rgba(0,0,0,0.04);
+  --accent: #4d6b00;        /* 밝은 배경에서도 읽히도록 진한 올리브 */
+  --accent2: #3c5400;
+  --accent-soft: rgba(77,107,0,0.08);
+  --accent-line: rgba(77,107,0,0.5);
+  --nav-bg: rgba(246,244,238,0.9);
+  --focus: #4d6b00;
+  color-scheme: light;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,13 +81,36 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--white);
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 300;
   overflow-x: hidden;
-  cursor: none;
+  word-break: keep-all;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* 커스텀 커서 */
+/* ── 접근성 공통 ── */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+/* 본문 바로가기 */
+.skip-link {
+  position: fixed; left: 1rem; top: -4rem; z-index: 10000;
+  background: var(--accent); color: var(--bg);
+  padding: 0.75rem 1.25rem; font-weight: 500; text-decoration: none;
+  border-radius: 4px;
+}
+.skip-link:focus { top: 1rem; }
+
+/* 커스텀 커서: 마우스 기기에서만 사용 (터치·키보드 환경은 기본 커서) */
+.cursor, .cursor-ring { display: none; }
+.has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
+.has-cursor .cursor, .has-cursor .cursor-ring { display: block; }
 .cursor {
   width: 10px; height: 10px;
   background: var(--accent);
@@ -45,7 +123,7 @@ body {
 }
 .cursor-ring {
   width: 36px; height: 36px;
-  border: 1px solid rgba(212,240,96,0.5);
+  border: 1px solid var(--accent-line);
   border-radius: 50%;
   position: fixed; top: 0; left: 0;
   pointer-events: none;
@@ -54,19 +132,27 @@ body {
 }
 
 /* ── NAV ── */
-nav {
+.site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
   padding: 1.5rem 3rem;
-  mix-blend-mode: normal;
+  transition: background 0.3s, padding 0.3s;
+}
+/* 스크롤하면 배경을 깔아 본문 위에서도 메뉴가 읽히게 */
+.site-header.scrolled {
+  background: var(--nav-bg);
+  backdrop-filter: blur(10px);
+  padding-top: 1rem; padding-bottom: 1rem;
+  border-bottom: 1px solid var(--gray2);
 }
 .nav-logo {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-display);
   font-weight: 800; font-size: 1.1rem;
   letter-spacing: -0.02em;
   color: var(--white);
   text-decoration: none;
 }
+.nav-right { display: flex; align-items: center; gap: 1.5rem; }
 .nav-links {
   display: flex; gap: 2rem; list-style: none;
 }
@@ -77,7 +163,20 @@ nav {
   letter-spacing: 0.04em;
   transition: color 0.2s;
 }
-.nav-links a:hover { color: var(--white); }
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--white); }
+.nav-btn {
+  min-width: 44px; min-height: 44px;
+  padding: 0 0.9rem;
+  background: transparent;
+  border: 1px solid var(--gray2);
+  border-radius: 999px;
+  color: var(--white);
+  font: inherit; font-size: 0.75rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  transition: border-color 0.2s, color 0.2s;
+}
+.nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+.menu-btn { display: none; }
 
 /* ── HERO ── */
 .hero {
@@ -93,10 +192,10 @@ nav {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: clamp(8rem, 18vw, 22rem);
-  color: rgba(255,255,255,0.025);
+  color: var(--ghost);
   white-space: nowrap;
   pointer-events: none;
   letter-spacing: -0.04em;
@@ -118,7 +217,7 @@ nav {
   background: var(--accent);
 }
 .hero-headline {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: clamp(3.5rem, 9vw, 9rem);
   line-height: 0.92;
@@ -151,7 +250,9 @@ nav {
   color: var(--gray);
   display: flex; align-items: center; gap: 0.75rem;
   text-transform: uppercase;
+  text-decoration: none;
 }
+.hero-scroll:hover { color: var(--white); }
 .scroll-line {
   width: 3rem; height: 1px;
   background: var(--gray);
@@ -182,8 +283,10 @@ nav {
   display: inline-flex;
   animation: marquee 25s linear infinite;
 }
+/* 마우스를 올리면 흐름 멈춤 */
+.marquee-section:hover .marquee-track { animation-play-state: paused; }
 .marquee-item {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-display);
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -219,7 +322,7 @@ section { padding: 6rem 3rem; }
   background: var(--accent);
 }
 .section-title {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: clamp(2rem, 5vw, 4.5rem);
   line-height: 1;
@@ -234,13 +337,13 @@ section { padding: 6rem 3rem; }
   grid-template-columns: repeat(2, 1fr);
   gap: 1px;
   background: var(--gray2);
+  list-style: none;
 }
 .work-card {
   background: var(--bg);
   padding: 2.5rem;
   position: relative;
   overflow: hidden;
-  cursor: none;
   transition: background 0.3s;
   min-height: 280px;
   display: flex; flex-direction: column; justify-content: space-between;
@@ -267,23 +370,38 @@ section { padding: 6rem 3rem; }
   overflow: hidden;
   position: relative;
 }
+.work-card-wide .work-card-thumb { height: 200px; }
 .work-card:hover .work-card-thumb { border-color: var(--accent); }
-.thumb-icon {
-  font-size: 2rem;
-  opacity: 0.3;
-  margin-bottom: 0.5rem;
+/* 실제 작업 이미지를 넣으면 칸을 꽉 채움 */
+.work-card-thumb img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
 }
-.work-card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+/* 이미지 준비 전 자리표시: 큰 번호 + 안내 문구 */
+.thumb-placeholder { text-align: center; }
+.thumb-mark {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.6rem;
+  letter-spacing: -0.04em;
+  color: var(--gray2);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+}
+.work-card-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; }
 .work-card-title {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.25rem;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 .work-card-tags {
   display: flex; flex-wrap: wrap; gap: 0.4rem;
   margin-top: 0.5rem;
+  list-style: none;
 }
 .tag {
   font-size: 0.65rem;
@@ -307,7 +425,7 @@ section { padding: 6rem 3rem; }
 .work-card:hover .work-card-arrow {
   border-color: var(--accent);
   color: var(--accent);
-  background: rgba(212,240,96,0.08);
+  background: var(--accent-soft);
 }
 .work-card-wide {
   grid-column: span 2;
@@ -322,11 +440,10 @@ section { padding: 6rem 3rem; }
   gap: 6rem;
   align-items: start;
 }
-.about-left {}
 .about-copy {
   font-size: 1.15rem;
   line-height: 1.75;
-  color: #c0bdb6;
+  color: var(--soft);
   margin-bottom: 2rem;
 }
 .about-copy strong { color: var(--white); font-weight: 500; }
@@ -340,7 +457,7 @@ section { padding: 6rem 3rem; }
   padding: 1.5rem;
 }
 .stat-num {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: 2.8rem;
   letter-spacing: -0.04em;
@@ -354,7 +471,15 @@ section { padding: 6rem 3rem; }
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-.about-right {}
+.skill-heading {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
 .skill-list {
   list-style: none;
   border-top: 1px solid var(--gray2);
@@ -364,6 +489,7 @@ section { padding: 6rem 3rem; }
   padding: 1rem 0;
   border-bottom: 1px solid var(--gray2);
   font-size: 0.9rem;
+  gap: 1rem;
 }
 .skill-name { color: var(--white); font-weight: 400; }
 .skill-level {
@@ -381,9 +507,11 @@ section { padding: 6rem 3rem; }
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1px;
-  background: var(--gray2);
+  /* 빈 칸이 회색으로 차지 않도록 배경 대신 테두리로 구분선 표시 */
+  border-top: 1px solid var(--gray2);
+  border-left: 1px solid var(--gray2);
   margin-top: 3rem;
+  list-style: none;
 }
 .tool-box {
   background: var(--bg);
@@ -392,10 +520,25 @@ section { padding: 6rem 3rem; }
   align-items: center; justify-content: center;
   text-align: center;
   gap: 0.75rem;
+  border-right: 1px solid var(--gray2);
+  border-bottom: 1px solid var(--gray2);
   transition: background 0.25s;
 }
 .tool-box:hover { background: var(--bg3); }
-.tool-icon { font-size: 1.8rem; }
+/* 이모지 대신 쓰는 2글자 모노그램 아이콘 */
+.tool-icon {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border: 1px solid var(--gray2);
+  border-radius: 10px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  transition: border-color 0.25s;
+}
+.tool-box:hover .tool-icon { border-color: var(--accent); }
 .tool-name {
   font-size: 0.72rem;
   letter-spacing: 0.08em;
@@ -410,7 +553,7 @@ section { padding: 6rem 3rem; }
   text-align: center;
 }
 .contact-big {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: clamp(3rem, 8vw, 8rem);
   letter-spacing: -0.04em;
@@ -432,6 +575,7 @@ section { padding: 6rem 3rem; }
 .contact-email:hover { color: var(--white); border-color: var(--white); }
 .contact-links {
   display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+  list-style: none;
 }
 .contact-link {
   font-size: 0.78rem;
@@ -440,8 +584,17 @@ section { padding: 6rem 3rem; }
   color: var(--gray);
   text-decoration: none;
   transition: color 0.2s;
+  display: inline-block;
+  padding: 0.5rem 0;
 }
-.contact-link:hover { color: var(--accent); }
+a.contact-link:hover { color: var(--accent); }
+/* 주소가 아직 없는 링크: 흐리게 + "준비 중" 표시 */
+.contact-link.is-pending { opacity: 0.6; }
+.contact-link.is-pending::after {
+  content: ' · 준비 중';
+  text-transform: none;
+  letter-spacing: 0;
+}
 
 /* ── FOOTER ── */
 footer {
@@ -454,7 +607,7 @@ footer {
   flex-wrap: wrap; gap: 1rem;
 }
 .footer-logo {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: 0.9rem;
   letter-spacing: -0.01em;
@@ -465,24 +618,48 @@ footer {
   letter-spacing: 0.04em;
 }
 
-/* ── FADE IN ── */
-.fade-in {
+/* ── FADE IN: JS가 켜져 있을 때만 숨김 (JS 오류 시에도 내용이 보이도록) ── */
+.js .fade-in {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.fade-in.visible {
+.js .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* ── 움직임 줄이기 설정 사용자 배려 ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee-track, .scroll-line::after { animation: none; }
+  .js .fade-in { opacity: 1; transform: none; transition: none; }
+  * { transition-duration: 0.01ms !important; }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  nav { padding: 1.2rem 1.5rem; }
-  nav .nav-links { display: none; }
+  .site-header { padding: 1rem 1.5rem; }
+  .nav-right { gap: 0.5rem; }
+  .menu-btn { display: inline-block; }
+  /* 모바일 메뉴: 버튼으로 펼침 */
+  .nav-links {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; gap: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--gray2);
+    padding: 0.5rem 1.5rem 1rem;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { display: block; padding: 0.9rem 0; font-size: 1rem; }
   .hero, section { padding: 3rem 1.5rem; }
   .hero { padding-top: 6rem; }
+  /* 긴 단어(experiences)가 화면 밖으로 잘리지 않게 */
+  .hero-headline { font-size: 9vw; }
   .work-grid { grid-template-columns: 1fr; }
+  .work-card { padding: 1.75rem; }
   .work-card-wide { grid-column: span 1; }
   .about-inner { grid-template-columns: 1fr; gap: 3rem; }
   footer { padding: 1.5rem; }
@@ -491,25 +668,35 @@ footer {
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<a class="skip-link" href="#main">본문 바로가기</a>
+
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
 <!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">Jenet Jang</a>
-  <ul class="nav-links">
-    <li><a href="#work">Work</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#tools">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+<header class="site-header" id="siteHeader">
+  <a href="#top" class="nav-logo" aria-label="Jenet Jang 처음으로">Jenet Jang</a>
+  <div class="nav-right">
+    <nav aria-label="주 메뉴">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#tools">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="nav-btn" id="themeBtn" aria-label="라이트 모드로 전환">Light</button>
+    <button type="button" class="nav-btn menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-text">JENET</div>
-  <div class="hero-tag">Seoul, Korea — E-Learning & Content</div>
-  <h1 class="hero-headline">
+<section class="hero" id="top" aria-labelledby="heroTitle">
+  <div class="hero-bg-text" aria-hidden="true">JENET</div>
+  <p class="hero-tag">Seoul, Korea — E-Learning &amp; Content</p>
+  <h1 class="hero-headline" id="heroTitle">
     Maker of<br>
     <em>learning</em><br>
     experiences
@@ -520,16 +707,18 @@ footer {
       강의 교안 디자인, 웹 퍼블리싱까지.<br>
       교육과 기술이 만나는 지점에서 일합니다.
     </p>
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
+    <a class="hero-scroll" href="#work">
+      <span class="scroll-line" aria-hidden="true"></span>
       Scroll
-    </div>
+      <span class="sr-only">작업물로 이동</span>
+    </a>
   </div>
 </section>
 
-<!-- MARQUEE -->
+<!-- MARQUEE: 장식용 흐르는 직함 (화면낭독기에서는 아래 목록 한 번만 읽음) -->
 <div class="marquee-section">
-  <div class="marquee-track">
+  <p class="sr-only">직무: E-Learning Developer, Instructional Designer, Web Publisher, Content Video Designer, HRD Specialist, AI Content Creator, PPT Designer, Stock Illustrator</p>
+  <div class="marquee-track" aria-hidden="true">
     <span class="marquee-item"><span class="marquee-dot"></span>E-Learning Developer</span>
     <span class="marquee-item"><span class="marquee-dot"></span>Instructional Designer</span>
     <span class="marquee-item"><span class="marquee-dot"></span>Web Publisher</span>
@@ -551,137 +740,127 @@ footer {
 </div>
 
 <!-- WORK -->
-<section class="work-section" id="work">
-  <div class="section-eyebrow fade-in">Work</div>
-  <h2 class="section-title fade-in">Selected<br>Projects</h2>
+<section class="work-section" id="work" aria-labelledby="workTitle">
+  <p class="section-eyebrow fade-in">Work</p>
+  <h2 class="section-title fade-in" id="workTitle">Selected<br>Projects</h2>
 
-  <div class="work-grid">
+  <!--
+    작업 이미지 넣는 법:
+    .thumb-placeholder 블록을 지우고 아래처럼 이미지 한 줄을 넣으세요.
+    <img src="images/work-01.jpg" alt="AI 기반 이러닝 학습 화면" loading="lazy">
+  -->
+  <ul class="work-grid">
     <!-- Card 1 -->
-    <div class="work-card fade-in">
+    <li class="work-card fade-in">
       <div>
-        <div class="work-card-num">01 — E-Learning</div>
+        <p class="work-card-num">01 — E-Learning</p>
         <div class="work-card-thumb">
-          <div style="text-align:center">
-            <div class="thumb-icon">📚</div>
-            <div>작업물 이미지 첨부</div>
-          </div>
+          <div class="thumb-placeholder"><span class="thumb-mark" aria-hidden="true">01</span>작업물 이미지 준비 중</div>
         </div>
       </div>
       <div class="work-card-bottom">
         <div>
-          <div class="work-card-title">AI 기반 이러닝<br>콘텐츠 개발</div>
-          <div class="work-card-tags">
-            <span class="tag">Instructional Design</span>
-            <span class="tag">Script</span>
-            <span class="tag">AI</span>
-          </div>
+          <h3 class="work-card-title">AI 기반 이러닝<br>콘텐츠 개발</h3>
+          <ul class="work-card-tags">
+            <li class="tag">Instructional Design</li>
+            <li class="tag">Script</li>
+            <li class="tag">AI</li>
+          </ul>
         </div>
-        <div class="work-card-arrow">↗</div>
+        <span class="work-card-arrow" aria-hidden="true">↗</span>
       </div>
-    </div>
+    </li>
 
     <!-- Card 2 -->
-    <div class="work-card fade-in">
+    <li class="work-card fade-in">
       <div>
-        <div class="work-card-num">02 — PPT Design</div>
+        <p class="work-card-num">02 — PPT Design</p>
         <div class="work-card-thumb">
-          <div style="text-align:center">
-            <div class="thumb-icon">🎨</div>
-            <div>작업물 이미지 첨부</div>
-          </div>
+          <div class="thumb-placeholder"><span class="thumb-mark" aria-hidden="true">02</span>작업물 이미지 준비 중</div>
         </div>
       </div>
       <div class="work-card-bottom">
         <div>
-          <div class="work-card-title">강의 교안<br>PPT 디자인</div>
-          <div class="work-card-tags">
-            <span class="tag">PowerPoint</span>
-            <span class="tag">Layout</span>
-            <span class="tag">Print</span>
-          </div>
+          <h3 class="work-card-title">강의 교안<br>PPT 디자인</h3>
+          <ul class="work-card-tags">
+            <li class="tag">PowerPoint</li>
+            <li class="tag">Layout</li>
+            <li class="tag">Print</li>
+          </ul>
         </div>
-        <div class="work-card-arrow">↗</div>
+        <span class="work-card-arrow" aria-hidden="true">↗</span>
       </div>
-    </div>
+    </li>
 
     <!-- Card 3 Wide -->
-    <div class="work-card work-card-wide fade-in">
+    <li class="work-card work-card-wide fade-in">
       <div>
-        <div class="work-card-num">03 — Web Publishing</div>
-        <div class="work-card-thumb" style="height:200px">
-          <div style="text-align:center">
-            <div class="thumb-icon">🌐</div>
-            <div>작업물 이미지 첨부</div>
-          </div>
+        <p class="work-card-num">03 — Web Publishing</p>
+        <div class="work-card-thumb">
+          <div class="thumb-placeholder"><span class="thumb-mark" aria-hidden="true">03</span>작업물 이미지 준비 중</div>
         </div>
       </div>
       <div class="work-card-bottom">
         <div>
-          <div class="work-card-title">웹 퍼블리싱 · Leaflet 지도 · UI 설계</div>
-          <div class="work-card-tags">
-            <span class="tag">HTML/CSS</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">Leaflet</span>
-          </div>
+          <h3 class="work-card-title">웹 퍼블리싱 · Leaflet 지도 · UI 설계</h3>
+          <ul class="work-card-tags">
+            <li class="tag">HTML/CSS</li>
+            <li class="tag">JavaScript</li>
+            <li class="tag">Leaflet</li>
+          </ul>
         </div>
-        <div class="work-card-arrow">↗</div>
+        <span class="work-card-arrow" aria-hidden="true">↗</span>
       </div>
-    </div>
+    </li>
 
     <!-- Card 4 -->
-    <div class="work-card fade-in">
+    <li class="work-card fade-in">
       <div>
-        <div class="work-card-num">04 — Video Content</div>
+        <p class="work-card-num">04 — Video Content</p>
         <div class="work-card-thumb">
-          <div style="text-align:center">
-            <div class="thumb-icon">🎬</div>
-            <div>작업물 이미지 첨부</div>
-          </div>
+          <div class="thumb-placeholder"><span class="thumb-mark" aria-hidden="true">04</span>작업물 이미지 준비 중</div>
         </div>
       </div>
       <div class="work-card-bottom">
         <div>
-          <div class="work-card-title">조선왕조 테마<br>영상 콘텐츠</div>
-          <div class="work-card-tags">
-            <span class="tag">Storytelling</span>
-            <span class="tag">AI Image</span>
-          </div>
+          <h3 class="work-card-title">조선왕조 테마<br>영상 콘텐츠</h3>
+          <ul class="work-card-tags">
+            <li class="tag">Storytelling</li>
+            <li class="tag">AI Image</li>
+          </ul>
         </div>
-        <div class="work-card-arrow">↗</div>
+        <span class="work-card-arrow" aria-hidden="true">↗</span>
       </div>
-    </div>
+    </li>
 
     <!-- Card 5 -->
-    <div class="work-card fade-in">
+    <li class="work-card fade-in">
       <div>
-        <div class="work-card-num">05 — HRD</div>
+        <p class="work-card-num">05 — HRD</p>
         <div class="work-card-thumb">
-          <div style="text-align:center">
-            <div class="thumb-icon">📋</div>
-            <div>작업물 이미지 첨부</div>
-          </div>
+          <div class="thumb-placeholder"><span class="thumb-mark" aria-hidden="true">05</span>작업물 이미지 준비 중</div>
         </div>
       </div>
       <div class="work-card-bottom">
         <div>
-          <div class="work-card-title">법정의무교육<br>HRD 기획</div>
-          <div class="work-card-tags">
-            <span class="tag">HRD</span>
-            <span class="tag">Planning</span>
-          </div>
+          <h3 class="work-card-title">법정의무교육<br>HRD 기획</h3>
+          <ul class="work-card-tags">
+            <li class="tag">HRD</li>
+            <li class="tag">Planning</li>
+          </ul>
         </div>
-        <div class="work-card-arrow">↗</div>
+        <span class="work-card-arrow" aria-hidden="true">↗</span>
       </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </section>
 
 <!-- ABOUT -->
-<section class="about-section" id="about">
+<section class="about-section" id="about" aria-labelledby="aboutTitle">
   <div class="about-inner">
     <div class="about-left">
-      <div class="section-eyebrow fade-in">About</div>
-      <h2 class="section-title fade-in">교육과<br>기술 사이</h2>
+      <p class="section-eyebrow fade-in">About</p>
+      <h2 class="section-title fade-in" id="aboutTitle">교육과<br>기술 사이</h2>
       <p class="about-copy fade-in">
         경영지원 과장이자 이러닝 콘텐츠 개발자로,
         <strong>HRD 기획부터 AI 기반 콘텐츠 제작</strong>까지
@@ -693,164 +872,182 @@ footer {
         Figma · Python · Google Workspace를 활용한
         <strong>업무 자동화</strong>도 꾸준히 탐구합니다.
       </p>
-      <div class="stat-row fade-in">
+      <dl class="stat-row fade-in">
         <div class="stat-box">
-          <div class="stat-num">5+</div>
-          <div class="stat-label">이러닝 개발 경력</div>
+          <dt class="stat-num">5+</dt>
+          <dd class="stat-label">이러닝 개발 경력</dd>
         </div>
         <div class="stat-box">
-          <div class="stat-num">AI</div>
-          <div class="stat-label">기반 콘텐츠 특화</div>
+          <dt class="stat-num">AI</dt>
+          <dd class="stat-label">기반 콘텐츠 특화</dd>
         </div>
         <div class="stat-box">
-          <div class="stat-num">3</div>
-          <div class="stat-label">스톡 플랫폼 운영</div>
+          <dt class="stat-num">3</dt>
+          <dd class="stat-label">스톡 플랫폼 운영</dd>
         </div>
         <div class="stat-box">
-          <div class="stat-num">2급</div>
-          <div class="stat-label">평생교육사 취득 과정</div>
+          <dt class="stat-num">2급</dt>
+          <dd class="stat-label">평생교육사 취득 과정</dd>
         </div>
-      </div>
+      </dl>
     </div>
     <div class="about-right fade-in">
+      <h3 class="skill-heading">역량 수준 (5점 만점)</h3>
+      <!-- 점 개수는 data-level 숫자만 바꾸면 자동으로 그려집니다 -->
       <ul class="skill-list">
-        <li class="skill-item">
-          <span class="skill-name">이러닝 콘텐츠 개발</span>
-          <span class="skill-level">
-            <span class="skill-dot on"></span><span class="skill-dot on"></span>
-            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot on"></span>
-          </span>
-        </li>
-        <li class="skill-item">
-          <span class="skill-name">PowerPoint / PPT 디자인</span>
-          <span class="skill-level">
-            <span class="skill-dot on"></span><span class="skill-dot on"></span>
-            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot on"></span>
-          </span>
-        </li>
-        <li class="skill-item">
-          <span class="skill-name">HTML / CSS / Web Publishing</span>
-          <span class="skill-level">
-            <span class="skill-dot on"></span><span class="skill-dot on"></span>
-            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot"></span>
-          </span>
-        </li>
-        <li class="skill-item">
-          <span class="skill-name">Figma</span>
-          <span class="skill-level">
-            <span class="skill-dot on"></span><span class="skill-dot on"></span>
-            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot"></span>
-          </span>
-        </li>
-        <li class="skill-item">
-          <span class="skill-name">Python / Google Apps Script</span>
-          <span class="skill-level">
-            <span class="skill-dot on"></span><span class="skill-dot on"></span>
-            <span class="skill-dot on"></span><span class="skill-dot"></span><span class="skill-dot"></span>
-          </span>
-        </li>
-        <li class="skill-item">
-          <span class="skill-name">AI 프롬프트 설계 · 활용</span>
-          <span class="skill-level">
-            <span class="skill-dot on"></span><span class="skill-dot on"></span>
-            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot on"></span>
-          </span>
-        </li>
-        <li class="skill-item">
-          <span class="skill-name">교수설계 (Instructional Design)</span>
-          <span class="skill-level">
-            <span class="skill-dot on"></span><span class="skill-dot on"></span>
-            <span class="skill-dot on"></span><span class="skill-dot on"></span><span class="skill-dot"></span>
-          </span>
-        </li>
-        <li class="skill-item">
-          <span class="skill-name">Adobe Illustrator / Photoshop</span>
-          <span class="skill-level">
-            <span class="skill-dot on"></span><span class="skill-dot on"></span>
-            <span class="skill-dot on"></span><span class="skill-dot"></span><span class="skill-dot"></span>
-          </span>
-        </li>
+        <li class="skill-item"><span class="skill-name">이러닝 콘텐츠 개발</span><span class="skill-level" data-level="5"></span></li>
+        <li class="skill-item"><span class="skill-name">PowerPoint / PPT 디자인</span><span class="skill-level" data-level="5"></span></li>
+        <li class="skill-item"><span class="skill-name">HTML / CSS / Web Publishing</span><span class="skill-level" data-level="4"></span></li>
+        <li class="skill-item"><span class="skill-name">Figma</span><span class="skill-level" data-level="4"></span></li>
+        <li class="skill-item"><span class="skill-name">Python / Google Apps Script</span><span class="skill-level" data-level="3"></span></li>
+        <li class="skill-item"><span class="skill-name">AI 프롬프트 설계 · 활용</span><span class="skill-level" data-level="5"></span></li>
+        <li class="skill-item"><span class="skill-name">교수설계 (Instructional Design)</span><span class="skill-level" data-level="4"></span></li>
+        <li class="skill-item"><span class="skill-name">Adobe Illustrator / Photoshop</span><span class="skill-level" data-level="3"></span></li>
       </ul>
     </div>
   </div>
 </section>
 
 <!-- TOOLS -->
-<section class="tools-section" id="tools">
-  <div class="section-eyebrow fade-in">Tools</div>
-  <h2 class="section-title fade-in">주요 툴 &<br>플랫폼</h2>
-  <div class="tools-grid fade-in">
-    <div class="tool-box"><div class="tool-icon">🤖</div><div class="tool-name">Claude AI</div></div>
-    <div class="tool-box"><div class="tool-icon">📊</div><div class="tool-name">PowerPoint</div></div>
-    <div class="tool-box"><div class="tool-icon">🎨</div><div class="tool-name">Figma</div></div>
-    <div class="tool-box"><div class="tool-icon">🖼</div><div class="tool-name">Illustrator</div></div>
-    <div class="tool-box"><div class="tool-icon">📸</div><div class="tool-name">Photoshop</div></div>
-    <div class="tool-box"><div class="tool-icon">🐍</div><div class="tool-name">Python</div></div>
-    <div class="tool-box"><div class="tool-icon">🌍</div><div class="tool-name">Leaflet</div></div>
-    <div class="tool-box"><div class="tool-icon">📁</div><div class="tool-name">Google Drive</div></div>
-    <div class="tool-box"><div class="tool-icon">⚙️</div><div class="tool-name">Apps Script</div></div>
-    <div class="tool-box"><div class="tool-icon">📡</div><div class="tool-name">FTP</div></div>
-    <div class="tool-box"><div class="tool-icon">🔁</div><div class="tool-name">n8n</div></div>
-    <div class="tool-box"><div class="tool-icon">🗒</div><div class="tool-name">Notion</div></div>
-  </div>
+<section class="tools-section" id="tools" aria-labelledby="toolsTitle">
+  <p class="section-eyebrow fade-in">Tools</p>
+  <h2 class="section-title fade-in" id="toolsTitle">주요 툴 &amp;<br>플랫폼</h2>
+  <ul class="tools-grid fade-in">
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">Cl</span><span class="tool-name">Claude AI</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">Pp</span><span class="tool-name">PowerPoint</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">Fg</span><span class="tool-name">Figma</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">Ai</span><span class="tool-name">Illustrator</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">Ps</span><span class="tool-name">Photoshop</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">Py</span><span class="tool-name">Python</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">Lf</span><span class="tool-name">Leaflet</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">Gd</span><span class="tool-name">Google Drive</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">As</span><span class="tool-name">Apps Script</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">Ft</span><span class="tool-name">FTP</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">n8</span><span class="tool-name">n8n</span></li>
+    <li class="tool-box"><span class="tool-icon" aria-hidden="true">No</span><span class="tool-name">Notion</span></li>
+  </ul>
 </section>
 
 <!-- CONTACT -->
-<section class="contact-section" id="contact">
-  <div class="contact-big fade-in">
+<section class="contact-section" id="contact" aria-labelledby="contactTitle">
+  <h2 class="contact-big fade-in" id="contactTitle">
     Let's<br><span>create</span><br>together.
-  </div>
+  </h2>
   <a href="mailto:hostgod20@gmail.com" class="contact-email fade-in">hostgod20@gmail.com</a>
-  <div class="contact-links fade-in">
-    <a href="#" class="contact-link">LinkedIn</a>
-    <a href="#" class="contact-link">GitHub</a>
-    <a href="#" class="contact-link">Blog</a>
-    <a href="#" class="contact-link">Adobe Stock</a>
-  </div>
+  <!-- 주소가 생기면 span을 <a href="주소" class="contact-link">로 바꾸세요 -->
+  <ul class="contact-links fade-in">
+    <li><span class="contact-link is-pending">LinkedIn</span></li>
+    <li><a href="https://github.com/jdhai-web" class="contact-link" target="_blank" rel="noopener">GitHub<span class="sr-only"> (새 창)</span></a></li>
+    <li><span class="contact-link is-pending">Blog</span></li>
+    <li><span class="contact-link is-pending">Adobe Stock</span></li>
+  </ul>
 </section>
+
+</main>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Jenet Jang</div>
-  <div class="footer-copy">© 2026 Jenet Jang. All rights reserved.</div>
+  <div class="footer-copy">&copy; <span id="year">2026</span> Jenet Jang. All rights reserved.</div>
   <div class="footer-copy">Seoul, Korea</div>
 </footer>
 
 <script>
-// 커서
+// ── 역량 점수 점 그리기 + 화면낭독기용 점수 안내 ──
+document.querySelectorAll('.skill-level').forEach(el => {
+  const level = Number(el.dataset.level) || 0;
+  el.setAttribute('role', 'img');
+  el.setAttribute('aria-label', '5점 만점에 ' + level + '점');
+  for (let i = 1; i <= 5; i++) {
+    const dot = document.createElement('span');
+    dot.className = 'skill-dot' + (i <= level ? ' on' : '');
+    el.appendChild(dot);
+  }
+});
+
+// ── 커스텀 커서: 마우스(정밀 포인터) + 움직임 허용 환경에서만 ──
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
-});
-function animRing() {
-  rx += (mx - rx - 18) * 0.12;
-  ry += (my - ry - 18) * 0.12;
-  ring.style.transform = `translate(${rx}px, ${ry}px)`;
-  requestAnimationFrame(animRing);
+const fineMouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (fineMouse && !reduceMotion) {
+  document.body.classList.add('has-cursor');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+  });
+  (function animRing() {
+    rx += (mx - rx - 18) * 0.12;
+    ry += (my - ry - 18) * 0.12;
+    ring.style.transform = `translate(${rx}px, ${ry}px)`;
+    requestAnimationFrame(animRing);
+  })();
+  // 카드 위에서 커서 확대
+  document.querySelectorAll('.work-card').forEach(card => {
+    card.addEventListener('mouseenter', () => { cursor.style.transform += ' scale(3)'; });
+    card.addEventListener('mouseleave', () => {
+      cursor.style.transform = cursor.style.transform.replace(' scale(3)', '');
+    });
+  });
 }
-animRing();
 
-// 스크롤 페이드인
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+// ── 스크롤 페이드인 ──
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+} else {
+  document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+}
 
-// 카드 커서 효과
-document.querySelectorAll('.work-card').forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    cursor.style.transform += ' scale(3)';
-    cursor.style.mixBlendMode = 'difference';
-  });
-  card.addEventListener('mouseleave', () => {
-    cursor.style.transform = cursor.style.transform.replace(' scale(3)', '');
-  });
+// ── 스크롤 시 상단 메뉴 배경 ──
+const header = document.getElementById('siteHeader');
+const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// ── 다크/라이트 전환 (선택값은 브라우저에 저장) ──
+const root = document.documentElement;
+const themeBtn = document.getElementById('themeBtn');
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+function syncTheme() {
+  const light = root.getAttribute('data-theme') === 'light';
+  themeBtn.textContent = light ? 'Dark' : 'Light';
+  themeBtn.setAttribute('aria-label', light ? '다크 모드로 전환' : '라이트 모드로 전환');
+  themeMeta.setAttribute('content', light ? '#f6f4ee' : '#0c0c0c');
+}
+themeBtn.addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  root.setAttribute('data-theme', next);
+  try { localStorage.setItem('theme', next); } catch (e) {}
+  syncTheme();
 });
+syncTheme();
+
+// ── 모바일 메뉴 열기/닫기 ──
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.getElementById('navLinks');
+function closeMenu() {
+  navLinks.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  menuBtn.textContent = 'Menu';
+}
+menuBtn.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', String(open));
+  menuBtn.textContent = open ? 'Close' : 'Menu';
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && navLinks.classList.contains('open')) { closeMenu(); menuBtn.focus(); }
+});
+
+// ── 저작권 연도 자동 표시 ──
+document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
